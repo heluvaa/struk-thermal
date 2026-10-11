@@ -1,0 +1,7 @@
+# Runtime dev-only. The app ships zero dependencies; node_modules exists only for
+# tools/*.cjs (render + jsdom harness), so it must not be published.
+node_modules/
+
+# Scratch
+*.log
+_probe.html
