@@ -1,0 +1,19 @@
+{
+  "name": "Struk Thermal — Generator Struk Toko",
+  "short_name": "Struk Thermal",
+  "description": "Buat struk thermal toko: data toko, alamat, tanggal dan waktu transaksi, item belanja, total, kembalian. Unduh PNG. Jalan offline.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#eef3f2",
+  "theme_color": "#0f766e",
+  "lang": "id",
+  "dir": "ltr",
+  "categories": ["business", "productivity", "utilities"],
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

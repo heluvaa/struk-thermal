@@ -1,0 +1,301 @@
+/* ============================================================
+   Struk Thermal — styles
+   Palette is contrast-checked (see tools/wcag-contrast.js):
+   - --ink on --bg / --card  >= 12:1
+   - white on --accent       >= 4.6:1  (button fill)
+   - --border-ctrl on --card >= 3:1    (control boundary)
+   ============================================================ */
+:root {
+  color-scheme: light;
+  --bg: #eef3f2;
+  --card: #ffffff;
+  --ink: #14211f;
+  --ink-soft: #4a5c59;
+  --accent: #0f766e;
+  --accent-ink: #ffffff;
+  --accent-quiet: #e6f2f0;
+  --danger: #b91c1c;
+  --border-ctrl: #7b8b89;
+  --border-soft: #dbe4e2;
+  --shadow: 0 1px 2px rgba(20, 33, 31, .06), 0 8px 24px rgba(20, 33, 31, .06);
+  --r: 10px;
+  --r-pill: 999px;
+  --mono: ui-monospace, "DejaVu Sans Mono", "Courier New", Courier, monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0f1615;
+  --card: #18211f;
+  --ink: #e9f1ef;
+  --ink-soft: #a7b7b4;
+  --accent: #34d3bd;
+  --accent-ink: #06211d;
+  --accent-quiet: #1e2f2c;
+  --danger: #fca5a5;
+  --border-ctrl: #7d8f8c;
+  --border-soft: #2b3835;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 10px 26px rgba(0, 0, 0, .35);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+.skip {
+  position: absolute; left: -9999px; top: 0;
+  background: var(--accent); color: var(--accent-ink);
+  padding: .6rem 1rem; border-radius: 0 0 var(--r) 0; z-index: 50;
+}
+.skip:focus { left: 0; }
+
+/* ---------- header rail (caps at the same width as main) ---------- */
+.rail {
+  background: var(--card);
+  border-bottom: 1px solid var(--border-soft);
+  position: sticky; top: 0; z-index: 20;
+}
+.rail-in, main, .foot {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding-inline: 16px;
+}
+.rail-in {
+  display: flex; align-items: center; gap: 12px;
+  justify-content: space-between; flex-wrap: wrap;
+  padding-block: 12px;
+}
+.brand h1 { font-size: 1.15rem; margin: 0; letter-spacing: -.01em; }
+.brand p { margin: 2px 0 0; font-size: .82rem; color: var(--ink-soft); }
+.rail-act { display: flex; gap: 8px; }
+
+/* ---------- panels ---------- */
+main {
+  display: grid;
+  gap: 16px;
+  padding-block: 16px 8px;
+  align-items: start;
+}
+.panel {
+  background: var(--card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  margin: 0 0 16px;
+}
+.col-form .panel:last-child { margin-bottom: 0; }
+.panel-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; margin-bottom: 10px;
+}
+.panel h2 { font-size: 1rem; margin: 0; letter-spacing: -.01em; }
+.chip {
+  font: 600 .72rem/1 var(--sans);
+  background: var(--accent-quiet); color: var(--accent-ink);
+  border: 1px solid var(--border-soft);
+  padding: .35rem .6rem; border-radius: var(--r-pill);
+}
+html[data-theme="dark"] .chip { color: var(--accent); }
+.panel-danger { border-color: var(--border-ctrl); }
+.panel-sheet { grid-column: 1 / -1; }
+
+/* ---------- preview ---------- */
+.canvas-frame {
+  background: #f6f8f8;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--r);
+  padding: 12px;
+  display: flex; justify-content: center;
+  overflow-x: auto;
+  max-height: 68vh;
+}
+html[data-theme="dark"] .canvas-frame { background: #222d2b; }
+.canvas-frame canvas {
+  display: block;
+  width: auto; height: auto;
+  max-width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .18);
+}
+.summary { margin: 14px 0 6px; display: grid; gap: 6px; }
+.summary > div { display: flex; justify-content: space-between; gap: 12px; font-size: .9rem; }
+.summary dt { color: var(--ink-soft); margin: 0; }
+.summary dd { margin: 0; font-family: var(--mono); }
+.sum-total dt, .sum-total dd { font-weight: 700; color: var(--ink); font-size: 1rem; }
+.sum-total { border-top: 1px dashed var(--border-ctrl); padding-top: 8px; }
+
+/* ---------- forms ---------- */
+fieldset { border: 0; padding: 0; margin: 0; }
+fieldset.panel > legend { padding: 0; }
+fieldset.panel > legend h2 {
+  font-size: 1rem; margin: 0 0 4px; padding: 0;
+}
+label {
+  display: block; font-size: .82rem; font-weight: 600;
+  color: var(--ink-soft); margin: 10px 0 4px;
+}
+/* Grid/flex children refuse to shrink below their intrinsic width, and a text input's intrinsic
+   width is its default size (~177px). One item row then measures ~404px and the whole page scrolls
+   sideways on a 360px phone. min-width:0 is what lets these children actually shrink. */
+.item-row > *, .grid-2 > *, .grid-3 > *, .inline > *, .summary > * { min-width: 0; }
+
+input, select, textarea {
+  width: 100%;
+  font: inherit;
+  font-size: .95rem;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--border-ctrl);
+  border-radius: 8px;
+  padding: .6rem .7rem;
+  min-height: 44px;
+}
+input[type="datetime-local"] { min-width: 0; }
+select { appearance: auto; }
+input:focus, select:focus, button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 1px;
+}
+.inline { display: flex; gap: 8px; align-items: stretch; }
+.inline input { flex: 1 1 auto; }
+.grid-2, .grid-3 { display: grid; gap: 10px; }
+@media (min-width: 560px) {
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+  .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+}
+.hint { font-size: .78rem; color: var(--ink-soft); margin: 8px 0 0; }
+.quick-cash .label { display: block; font-size: .82rem; font-weight: 600; color: var(--ink-soft); margin: 10px 0 4px; }
+.quick-cash .btn-row { flex-wrap: wrap; }
+
+/* ---------- buttons ---------- */
+.btn {
+  font: 600 .88rem/1 var(--sans);
+  min-height: 44px;
+  padding: .6rem .95rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-ctrl);
+  background: var(--card);
+  color: var(--ink);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover { background: var(--accent-quiet); }
+.btn:active { transform: translateY(1px); }
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+.btn-primary:hover { filter: brightness(1.06); background: var(--accent); }
+.btn-quiet { background: transparent; }
+/* 44px is the minimum comfortable touch target, so the small variant keeps the smaller type and
+   tighter padding but NOT a shorter box — a 38px row is a miss-thumb on a phone. */
+.btn-sm { min-height: 44px; padding: .45rem .7rem; font-size: .8rem; }
+.btn[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn-row { display: flex; gap: 8px; margin-top: 12px; }
+.btn-row .btn { flex: 0 1 auto; }
+.profile-row { flex-wrap: wrap; align-items: center; }
+.profile-row select { width: auto; flex: 1 1 160px; min-height: 44px; padding: .45rem .6rem; font-size: .8rem; }
+
+/* ---------- items table ---------- */
+.item-head {
+  display: grid;
+  grid-template-columns: 1fr 84px 120px 44px;
+  gap: 6px;
+  font: 600 .74rem/1.2 var(--sans);
+  color: var(--ink-soft);
+  padding: 0 0 4px 2px;
+}
+.item-row {
+  display: grid;
+  grid-template-columns: 1fr 84px 120px 44px;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.item-row input { min-height: 40px; padding: .45rem .55rem; font-size: .88rem; }
+.item-row .line-total {
+  grid-column: 1 / -1;
+  font: .78rem/1.3 var(--mono);
+  color: var(--ink-soft);
+  text-align: right;
+  margin: -2px 0 2px;
+}
+.item-del {
+  min-height: 44px; padding: 0; font-size: 1.05rem; line-height: 1;
+  background: transparent; color: var(--danger); border-color: transparent;
+}
+.item-del:hover { background: var(--accent-quiet); }
+.items { margin-top: 4px; }
+
+/* ---------- history ---------- */
+.history { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 8px; }
+.history li {
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  padding: 8px 10px;
+  display: grid; gap: 2px;
+  font-size: .84rem;
+}
+.history .h-top { display: flex; justify-content: space-between; gap: 8px; }
+.history .h-no { font-family: var(--mono); font-weight: 700; }
+.history .h-tot { font-family: var(--mono); }
+.history .h-meta { color: var(--ink-soft); font-size: .76rem; }
+.history .h-act { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+.empty { color: var(--ink-soft); font-size: .84rem; font-style: italic; margin: 8px 0 0; }
+.empty[hidden] { display: none; }
+
+/* ---------- PNG sheet ---------- */
+.sheet-frame { margin-top: 10px; max-height: 70vh; overflow: auto; background: var(--bg); border: 1px solid var(--border-soft); border-radius: 8px; padding: 12px; }
+.sheet-frame img { display: block; margin: 0 auto; box-shadow: 0 4px 14px rgba(0, 0, 0, .18); border-radius: 4px; max-width: none; }
+
+/* ---------- toast ---------- */
+.toast {
+  position: fixed; left: 50%; bottom: 18px;
+  transform: translate(-50%, 140%);
+  background: var(--ink); color: var(--card);
+  padding: .6rem 1rem; border-radius: var(--r-pill);
+  font-size: .84rem; z-index: 40;
+  opacity: 0; visibility: hidden;
+  transition: transform .2s ease, opacity .2s ease, visibility .2s;
+  max-width: min(92vw, 420px); text-align: center;
+}
+.toast.show { transform: translate(-50%, 0); opacity: 1; visibility: visible; }
+
+.foot {
+  padding-block: 8px 28px;
+  color: var(--ink-soft);
+  font-size: .76rem;
+}
+.foot p { margin: 0; }
+
+/* ---------- desktop: two columns, sticky preview ---------- */
+@media (min-width: 1024px) {
+  main { grid-template-columns: 420px 1fr; }
+  .col-preview { position: sticky; top: 76px; align-self: start; }
+  .panel-sheet { grid-column: 1 / -1; }
+  .canvas-frame { max-height: none; }
+}
+@media (max-width: 560px) {
+  .item-head { display: none; }
+  .item-row { grid-template-columns: 1fr 68px 96px 44px; }
+  .rail-act { width: 100%; }
+  .rail-act .btn { flex: 1 1 auto; }
+}
+/* Touch devices get the full 44px target even for "small" utility buttons — a 38px target is a
+   miss-thumb on a phone, and these are the buttons users hit most (Kosongkan, Baru, Sekarang). */
+@media (pointer: coarse) {
+  .btn-sm, .item-del, .profile-row select { min-height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
